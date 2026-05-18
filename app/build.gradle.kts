@@ -26,7 +26,7 @@ application {
 
 sonar {
     properties {
-        property("sonar.projectKey", "snevg04_java-project-78")
+        property("sonar.projectKey", "snevg04_java-project-72")
         property("sonar.organization", "sn-evg-04")
         property(
             "sonar.coverage.jacoco.xmlReportPaths",
