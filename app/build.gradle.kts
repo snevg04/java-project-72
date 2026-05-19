@@ -4,7 +4,6 @@ plugins {
     jacoco
     checkstyle
     application
-
 }
 
 group = "hexlet.code"
@@ -15,6 +14,10 @@ repositories {
 }
 
 dependencies {
+    implementation("com.gradleup.shadow:shadow-gradle-plugin:9.4.1")
+    implementation("io.javalin:javalin:7.2.2")
+    implementation("org.slf4j:slf4j-simple:2.0.7")
+    implementation("org.projectlombok:lombok:1.18.46")
     testImplementation(platform("org.junit:junit-bom:6.0.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
