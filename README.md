@@ -1,3 +1,6 @@
+### Available at:
+https://page-analyzer-ruq1.onrender.com/
+
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/snevg04/java-project-72/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/snevg04/java-project-72/actions)
 
