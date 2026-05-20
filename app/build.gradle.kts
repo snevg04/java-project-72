@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("org.sonarqube") version "7.3.0.8198"
+    id("com.gradleup.shadow") version "9.0.0-beta13"
     jacoco
     checkstyle
     application
@@ -14,7 +15,6 @@ repositories {
 }
 
 dependencies {
-    implementation("com.gradleup.shadow:shadow-gradle-plugin:9.4.1")
     implementation("io.javalin:javalin:7.2.2")
     implementation("org.slf4j:slf4j-simple:2.0.7")
     implementation("org.projectlombok:lombok:1.18.46")
