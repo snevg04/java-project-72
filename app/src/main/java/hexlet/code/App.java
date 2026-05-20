@@ -5,7 +5,8 @@ import io.javalin.Javalin;
 public class App {
     public static void main(String[] args) {
         var app = getApp();
-        app.start(7070);
+        var port = Integer.parseInt(System.getenv().getOrDefault("PORT", "7070"));
+        app.start(port);
     }
 
     public static Javalin getApp() {
