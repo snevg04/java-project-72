@@ -16,6 +16,8 @@ repositories {
 
 dependencies {
     implementation("io.javalin:javalin:7.2.2")
+    implementation("gg.jte:jte:3.2.4")
+    implementation("io.javalin:javalin-rendering:6.1.3")
     implementation("org.slf4j:slf4j-simple:2.0.7")
     implementation("org.postgresql:postgresql:42.7.7")
     implementation("com.h2database:h2:2.2.220")
