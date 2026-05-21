@@ -17,6 +17,9 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+### JTE Template Engine ###
+jte-classes/
+
 ### Mac OS ###
 .DS_Store
 
