@@ -5,6 +5,10 @@ import com.zaxxer.hikari.HikariDataSource;
 import hexlet.code.repository.BaseRepository;
 import io.javalin.Javalin;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
+
 public class App {
     public static void main(String[] args) {
         var app = getApp();
@@ -14,10 +18,21 @@ public class App {
 
     public static Javalin getApp() {
         var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DB_CLOSE_DELAY=-1");
+        var jdbcUrl = System.getenv()
+                .getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1");
+
+        hikariConfig.setJdbcUrl(jdbcUrl);
+
 
         var dataSource = new HikariDataSource(hikariConfig);
+
+        var url = App.class.getClassLoader().getResourceAsStream("schema.sql");
+        var sql = new BufferedReader(new InputStreamReader(url))
+                .lines().collect(Collectors.joining("\n"));
+
         BaseRepository.dataSource = dataSource;
+
+
 
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
