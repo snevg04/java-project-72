@@ -6,4 +6,8 @@ public class BasePage {
     public String getFlash() {
         return flash;
     }
+
+    public void setFlash(String flash) {
+        this.flash = flash;
+    }
 }
