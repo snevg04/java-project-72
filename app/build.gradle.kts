@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.javalin:javalin:7.2.2")
+    implementation("io.javalin:javalin:6.1.3")
     implementation("gg.jte:jte:3.2.4")
     implementation("io.javalin:javalin-rendering:6.1.3")
     implementation("org.slf4j:slf4j-simple:2.0.7")
