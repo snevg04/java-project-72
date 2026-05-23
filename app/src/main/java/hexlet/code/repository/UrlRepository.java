@@ -4,11 +4,13 @@ import hexlet.code.model.Url;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UrlRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
-        String sql = "INSERT INTO urls (name, createdAT) VALUES = (?, ?)";
+        String sql = "INSERT INTO urls (name, created_at) VALUES (?, ?)";
         try (var conn = dataSource.getConnection();
                 var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, url.getName());
@@ -16,7 +18,7 @@ public class UrlRepository extends BaseRepository {
             preparedStatement.executeUpdate();
             var generatedKeys = preparedStatement.getGeneratedKeys();
 
-            if(generatedKeys.next()) {
+            if (generatedKeys.next()) {
                 url.setId(generatedKeys.getLong(1));
             } else {
                 throw new SQLException("DB has not returned an id after saving an entity");
@@ -30,7 +32,7 @@ public class UrlRepository extends BaseRepository {
         try (var conn = dataSource.getConnection();
             var preparedStatement = conn.prepareStatement(sql)) {
 
-            preparedStatement.setLong(1,id);
+            preparedStatement.setLong(1, id);
 
             var resultSet = preparedStatement.executeQuery();
 
@@ -68,6 +70,27 @@ public class UrlRepository extends BaseRepository {
             }
 
             return Optional.empty();
+        }
+    }
+
+    public static List<Url> getEntities() throws SQLException {
+        String sql = "SELECT * FROM urls ORDER BY created_at DESC";
+
+        try (var conn = dataSource.getConnection();
+            var preparedStatement = conn.prepareStatement(sql)) {
+            var resultSet = preparedStatement.executeQuery();
+
+            List<Url> urls = new ArrayList<>();
+
+            while (resultSet.next()) {
+                var id = resultSet.getLong("id");
+                var name = resultSet.getString("name");
+                var createdAt = resultSet.getTimestamp("created_at");
+                Url url = new Url(name, createdAt);
+                url.setId(id);
+                urls.add(url);
+            }
+            return urls;
         }
     }
 }
