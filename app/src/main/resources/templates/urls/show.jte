@@ -3,7 +3,7 @@
 @template.layout.page(
 page = page,
 content = @`
-    <table data-test="url">
+    <table class="table" data-test="url">
         <tbody>
         <tr>
             <td>ID</td>
