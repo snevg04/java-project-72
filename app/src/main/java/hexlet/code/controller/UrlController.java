@@ -45,8 +45,10 @@ public class UrlController {
 
             if (port != -1) {
                 normalizedURL = protocol + "://" + host + ":" + port;
-            } else {
+            } else if (host != null && host.contains(".")) {
                 normalizedURL = protocol + "://" + host;
+            } else {
+                throw new IllegalArgumentException();
             }
 
             var found = UrlRepository.findByName(normalizedURL);
