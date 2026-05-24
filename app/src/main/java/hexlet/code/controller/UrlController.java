@@ -57,10 +57,10 @@ public class UrlController {
                 var entry = new Url(normalizedURL, Timestamp.from(Instant.now()));
                 UrlRepository.save(entry);
                 ctx.sessionAttribute("flash", "Страница успешно добавлена");
-                ctx.redirect(NamedRoutes.urlPath(entry.getId()));
+                ctx.redirect("/urls/" + entry.getId());
             } else {
                 ctx.sessionAttribute("flash", "Страница уже существует");
-                ctx.redirect(NamedRoutes.urlPath(found.get().getId()));
+                ctx.redirect("/urls/" + found.get().getId());
             }
 
         } catch (MalformedURLException | URISyntaxException | IllegalArgumentException e) {
