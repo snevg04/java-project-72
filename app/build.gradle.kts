@@ -24,6 +24,7 @@ dependencies {
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.projectlombok:lombok:1.18.46")
     testImplementation(platform("org.junit:junit-bom:6.0.0"))
+    testImplementation("io.javalin:javalin-testtools:6.1.3")
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
@@ -43,6 +44,10 @@ sonar {
     }
 }
 
+jacoco {
+    toolVersion = "0.8.11"
+}
+
 tasks.named<Test>("test") {
     useJUnitPlatform()
 }
@@ -54,4 +59,8 @@ tasks.named<JacocoReport>("jacocoTestReport") {
         html.required.set(true)
         csv.required.set(false)
     }
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
 }
