@@ -18,13 +18,11 @@ import java.util.stream.Collectors;
 
 public class App {
     public static void main(String[] args) throws SQLException {
-        var app = getApp();
-        var port = Integer.parseInt(System.getenv().getOrDefault("PORT", "7070"));
 
-        app.get(NamedRoutes.rootPath(), UrlController::index);
-        app.post(NamedRoutes.urlsPath(), UrlController::create);
-        app.get(NamedRoutes.urlsPath(), UrlController::list);
-        app.get(NamedRoutes.urlPath("{id}"), UrlController::show);
+        var jdbcUrl = System.getenv()
+                .getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1");
+        var app = getApp(jdbcUrl);
+        var port = Integer.parseInt(System.getenv().getOrDefault("PORT", "7070"));
 
         app.start(port);
     }
@@ -36,10 +34,8 @@ public class App {
         return templateEngine;
     }
 
-    public static Javalin getApp() throws SQLException {
+    public static Javalin getApp(String jdbcUrl) throws SQLException {
         var hikariConfig = new HikariConfig();
-        var jdbcUrl = System.getenv()
-                .getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1");
         System.out.println(jdbcUrl);
 
         hikariConfig.setJdbcUrl(jdbcUrl);
@@ -62,6 +58,11 @@ public class App {
             config.bundledPlugins.enableDevLogging();
             config.fileRenderer(new JavalinJte(createTemplateEngine()));
         });
+
+        app.get(NamedRoutes.rootPath(), UrlController::index);
+        app.post(NamedRoutes.urlsPath(), UrlController::create);
+        app.get(NamedRoutes.urlsPath(), UrlController::list);
+        app.get(NamedRoutes.urlPath("{id}"), UrlController::show);
 
         return app;
     }
