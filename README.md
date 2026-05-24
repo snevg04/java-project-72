@@ -9,3 +9,6 @@ https://page-analyzer-ruq1.onrender.com/
 
 ### SonarQube check:
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=snevg04_java-project-72&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=snevg04_java-project-72)
+
+### Test Coverage: 
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=snevg04_java-project-72&metric=coverage)](https://sonarcloud.io/summary/new_code?id=snevg04_java-project-72)
