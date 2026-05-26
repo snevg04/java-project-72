@@ -4,9 +4,16 @@ import hexlet.code.dto.BasePage;
 import hexlet.code.dto.UrlPage;
 import hexlet.code.dto.UrlsPage;
 import hexlet.code.model.Url;
+import hexlet.code.model.UrlCheck;
+import hexlet.code.repository.CheckRepository;
 import hexlet.code.repository.UrlRepository;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -80,8 +87,61 @@ public class UrlController {
         var url = UrlRepository.find(id)
                 .orElseThrow(() -> new NotFoundResponse("Страница не найдена"));
         String flash = ctx.consumeSessionAttribute("flash");
-        var page = new UrlPage(url);
+        List<UrlCheck> checks = CheckRepository.findByUrlId(id);
+        var page = new UrlPage(url, checks);
         page.setFlash(flash);
         ctx.render("urls/show.jte", model("page", page));
+    }
+
+    public static void check(Context ctx) throws SQLException {
+        var id = ctx.pathParamAsClass("id", Long.class).get();
+        var url = UrlRepository.find(id).get();
+
+        try {
+            HttpResponse<String> response = Unirest.get(url.getName()).asString();
+
+            var statusCode = response.getStatus();
+
+            if (statusCode >= 400) {
+                ctx.sessionAttribute("flash", "Произошла ошибка при проверке");
+                ctx.redirect("/urls/" + id);
+                return;
+            }
+
+            String html = response.getBody();
+            Document doc = Jsoup.parse(html);
+            String title = doc.title();
+            var h1Element = doc.selectFirst("h1");
+            String h1 = h1Element != null ? h1Element.text() : null;
+            Element meta = doc.selectFirst("meta[name=description]");
+            String description = meta != null ? meta.attr("content") : null;
+
+            var trimmedTitle = trim(title);
+            var trimmedH1 = trim(h1);
+            var trimmedDescription = trim(description);
+
+            var check = new UrlCheck(id, statusCode, trimmedTitle,
+                    trimmedH1, trimmedDescription, Timestamp.from(Instant.now()));
+            CheckRepository.save(check);
+            ctx.sessionAttribute("flash", "Страница успешно проверена");
+
+        } catch (Exception e) {
+            ctx.sessionAttribute("flash", "Произошла ошибка при проверке");
+        }
+
+        ctx.redirect("/urls/" + id);
+    }
+
+    public static String trim(String str) {
+
+        if (str == null) {
+            return null;
+        }
+
+        if (str.length() > 200) {
+            return str.substring(0, 200) + "...";
+        }
+
+        return str;
     }
 }
