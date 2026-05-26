@@ -94,10 +94,17 @@ public class UrlController {
     }
 
     public static void check(Context ctx) throws SQLException {
-        var id = ctx.pathParamAsClass("id", Long.class).get();
-        var url = UrlRepository.find(id).get();
 
         try {
+            var id = ctx.pathParamAsClass("id", Long.class).get();
+            Url url;
+
+            if (UrlRepository.find(id).isPresent()) {
+                url = UrlRepository.find(id).get();
+            } else {
+                throw new Exception();
+            }
+
             HttpResponse<String> response = Unirest.get(url.getName()).asString();
 
             var statusCode = response.getStatus();
@@ -124,12 +131,11 @@ public class UrlController {
                     trimmedH1, trimmedDescription, Timestamp.from(Instant.now()));
             CheckRepository.save(check);
             ctx.sessionAttribute("flash", "Страница успешно проверена");
+            ctx.redirect("/urls/" + id);
 
         } catch (Exception e) {
             ctx.sessionAttribute("flash", "Произошла ошибка при проверке");
         }
-
-        ctx.redirect("/urls/" + id);
     }
 
     public static String trim(String str) {
