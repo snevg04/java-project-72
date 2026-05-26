@@ -23,9 +23,12 @@ dependencies {
     implementation("com.h2database:h2:2.2.220")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.projectlombok:lombok:1.18.46")
+    implementation("com.konghq:unirest-java:3.14.5")
+    implementation("org.jsoup:jsoup:1.17.2")
     testImplementation(platform("org.junit:junit-bom:6.0.0"))
     testImplementation("io.javalin:javalin-testtools:6.1.3")
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("com.squareup.okhttp3:mockwebserver3:5.3.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
