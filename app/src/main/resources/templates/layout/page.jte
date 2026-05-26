@@ -18,9 +18,9 @@
         Анализатор страниц
     </a>
 
-    <span class="navbar-text text-white ms-2">
+    <a class="navbar-text text-white ms-2 container text-decoration-none" href="/urls">
             Сайты
-        </span>
+        </a>
 </nav>
 <main class="container">
     @if(page != null && page.getFlash() != null)
