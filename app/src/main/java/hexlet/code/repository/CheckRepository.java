@@ -16,8 +16,8 @@ public class CheckRepository extends BaseRepository {
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, check.getUrlId());
             preparedStatement.setInt(2, check.getStatusCode());
-            preparedStatement.setString(3, check.getTitle());
-            preparedStatement.setString(4, check.getH1());
+            preparedStatement.setString(3, check.getH1());
+            preparedStatement.setString(4, check.getTitle());
             preparedStatement.setString(5, check.getDescription());
             preparedStatement.setTimestamp(6, check.getCreatedAt());
             preparedStatement.executeUpdate();
