@@ -135,6 +135,8 @@ public class UrlController {
 
         } catch (Exception e) {
             ctx.sessionAttribute("flash", "Произошла ошибка при проверке");
+            var id = ctx.pathParam("id");
+            ctx.redirect("/urls/" + id);
         }
     }
 
