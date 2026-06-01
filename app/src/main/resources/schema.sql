@@ -11,8 +11,8 @@ CREATE TABLE url_checks (
     id SERIAL PRIMARY KEY,
     url_id bigint REFERENCES urls(id) ON DELETE CASCADE,
     status_code int,
-    h1 varchar(200),
-    title varchar(200),
-    description varchar(200),
+    h1 varchar(210),
+    title varchar(210),
+    description text,
     created_at timestamp
 );
