@@ -59,15 +59,17 @@ public class UrlController {
         var protocol = parsedUrl.getScheme();
         var host = parsedUrl.getHost();
         var port = parsedUrl.getPort();
-        String normalizedURL;
 
-        if (host == null) {
+        if (protocol == null || host == null) {
             var page = new BasePage();
             page.setFlash("Некорректный URL");
+
             ctx.status(HttpStatus.UNPROCESSABLE_CONTENT)
                     .render("index.jte", model("page", page));
             return;
         }
+
+        String normalizedURL;
 
         if (port != -1) {
             normalizedURL = protocol + "://" + host + ":" + port;
