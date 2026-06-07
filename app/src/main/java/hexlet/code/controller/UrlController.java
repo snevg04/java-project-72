@@ -60,7 +60,10 @@ public class UrlController {
         var host = parsedUrl.getHost();
         var port = parsedUrl.getPort();
 
-        if (protocol == null || host == null) {
+        if (protocol == null
+                || (!protocol.equals("http") && !protocol.equals("https"))
+                || host == null) {
+
             var page = new BasePage();
             page.setFlash("Некорректный URL");
 
