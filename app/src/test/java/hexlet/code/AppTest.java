@@ -140,6 +140,9 @@ public class AppTest {
             var check = checks.get(0);
 
             assertEquals(200, check.getStatusCode());
+            assertEquals("Test Title", check.getTitle());
+            assertEquals("Test H1", check.getH1());
+            assertEquals("Test description", check.getDescription());
         });
 
         mockServer.close();
