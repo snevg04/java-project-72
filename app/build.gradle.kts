@@ -1,5 +1,4 @@
 plugins {
-    id("java")
     id("org.sonarqube") version "7.3.0.8198"
     id("com.gradleup.shadow") version "9.0.0-beta13"
     jacoco
@@ -48,7 +47,7 @@ sonar {
 }
 
 jacoco {
-    toolVersion = "0.8.11"
+    toolVersion = "0.8.13"
 }
 
 tasks.named<Test>("test") {
