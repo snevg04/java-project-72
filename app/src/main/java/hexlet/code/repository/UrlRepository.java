@@ -4,6 +4,7 @@ import hexlet.code.model.Url;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +15,7 @@ public class UrlRepository extends BaseRepository {
         try (var conn = dataSource.getConnection();
                 var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, url.getName());
-            preparedStatement.setTimestamp(2, url.getCreatedAt());
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(url.getCreatedAt()));
             preparedStatement.executeUpdate();
             var generatedKeys = preparedStatement.getGeneratedKeys();
 
@@ -40,7 +41,8 @@ public class UrlRepository extends BaseRepository {
                 var name = resultSet.getString("name");
                 var createdAt = resultSet.getTimestamp("created_at");
 
-                var url = new Url(name, createdAt);
+                var url = new Url(name);
+                url.setCreatedAt(createdAt.toLocalDateTime());
                 url.setId(id);
 
                 return Optional.of(url);
@@ -63,7 +65,8 @@ public class UrlRepository extends BaseRepository {
                 var id = resultSet.getLong("id");
                 var createdAt = resultSet.getTimestamp("created_at");
 
-                var url = new Url(actualName, createdAt);
+                var url = new Url(actualName);
+                url.setCreatedAt(createdAt.toLocalDateTime());
                 url.setId(id);
 
                 return Optional.of(url);
@@ -86,7 +89,8 @@ public class UrlRepository extends BaseRepository {
                 var id = resultSet.getLong("id");
                 var name = resultSet.getString("name");
                 var createdAt = resultSet.getTimestamp("created_at");
-                Url url = new Url(name, createdAt);
+                Url url = new Url(name);
+                url.setCreatedAt(createdAt.toLocalDateTime());
                 url.setId(id);
                 urls.add(url);
             }
