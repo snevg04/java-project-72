@@ -19,8 +19,6 @@ import org.jsoup.nodes.Element;
 
 import java.net.URI;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -143,7 +141,8 @@ public class UrlController {
             var trimmedDescription = trim(description);
 
             var check = new UrlCheck(id, statusCode, trimmedTitle,
-                    trimmedH1, trimmedDescription, Timestamp.from(Instant.now()));
+                    trimmedH1, trimmedDescription);
+            check.setCreatedAt(LocalDateTime.now());
             CheckRepository.save(check);
             ctx.sessionAttribute("flash", "Страница успешно проверена");
             ctx.redirect("/urls/" + id);
