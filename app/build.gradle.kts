@@ -22,6 +22,7 @@ dependencies {
     implementation("com.h2database:h2:2.2.220")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.projectlombok:lombok:1.18.46")
+    annotationProcessor("org.projectlombok:lombok:1.18.38")
     implementation("com.konghq:unirest-java:3.14.5")
     implementation("org.jsoup:jsoup:1.17.2")
     testImplementation(platform("org.junit:junit-bom:6.0.0"))
@@ -50,10 +51,6 @@ jacoco {
     toolVersion = "0.8.13"
 }
 
-tasks.named<Test>("test") {
-    useJUnitPlatform()
-}
-
 tasks.named<JacocoReport>("jacocoTestReport") {
     dependsOn(tasks.test)
     reports {
@@ -64,5 +61,6 @@ tasks.named<JacocoReport>("jacocoTestReport") {
 }
 
 tasks.test {
+    useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport)
 }
