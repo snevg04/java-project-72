@@ -44,7 +44,7 @@ content = @`
                 <td>${check.getH1()}</td>
                 <td>${check.getTitle()}</td>
                 <td>${check.getDescription()}</td>
-                <td>${check.getCreatedAt().toString()}</td>
+                <td>${check.getCreatedAt().format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}</td>
             </tr>
         @endfor
         </tbody>
