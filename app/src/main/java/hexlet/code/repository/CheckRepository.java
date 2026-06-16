@@ -18,7 +18,7 @@ public class CheckRepository extends BaseRepository {
             preparedStatement.setString(3, check.getH1());
             preparedStatement.setString(4, check.getTitle());
             preparedStatement.setString(5, check.getDescription());
-            preparedStatement.setTimestamp(6, check.getCreatedAt());
+            preparedStatement.setTimestamp(6, java.sql.Timestamp.valueOf(check.getCreatedAt()));
             preparedStatement.executeUpdate();
 
             var generatedKeys = preparedStatement.getGeneratedKeys();
@@ -45,13 +45,14 @@ public class CheckRepository extends BaseRepository {
                 var foundH1 = resultSet.getString("h1");
                 var foundTitle = resultSet.getString("title");
                 var foundDescription = resultSet.getString("description");
-                var foundCreatedAt = resultSet.getTimestamp("created_at");
+                var foundCreatedAt = resultSet.getTimestamp("created_at").toLocalDateTime();
 
                 var check = new UrlCheck(urlId, foundCode, foundTitle,
-                        foundH1, foundDescription, foundCreatedAt
+                        foundH1, foundDescription
                 );
 
                 check.setId(foundId);
+                check.setCreatedAt(foundCreatedAt);
                 checks.add(check);
             }
             return checks;
