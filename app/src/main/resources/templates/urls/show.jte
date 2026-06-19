@@ -16,7 +16,7 @@ content = @`
         </tr>
         <tr>
             <td>Дата создания</td>
-            <td>${page.getUrl().getFormattedCreatedAt()}</td>
+            <td>${page.getUrl().getCreatedAt().format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}</td>
         </tr>
         </tbody>
     </table>
