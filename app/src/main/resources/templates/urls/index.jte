@@ -18,7 +18,7 @@ content = @`
 
                 <td>${url.getId()}</td>
                 <td><a href="/urls/${url.getId()}">${url.getName()}</a></td>
-                <td>${url.getFormattedCreatedAt()}</td>
+                <td>${url.getCreatedAt().format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}</td>
                 <td>200</td>
             </tr>
         @endfor
